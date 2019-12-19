@@ -1,0 +1,6 @@
+account.1.sip_listen_port
+account.1.transport
+account.1.codec.1.priority
+account.1.codec.2.enable
+account.1.codec.6.priority
+sip.rfc2543_hold_negotiate.enable

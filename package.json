@@ -1,15 +1,21 @@
 {
-  "name": "nest-typescript-starter",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "name": "@thecloudmethod/yealink-provision-patch",
+  "version": "0.1.0",
+  "description": "A proxy server to allow Yealink x.81.x.x and greater firmware phones to be provisioned by legacy provisioning servers using encrypted MAC.boot and MAC.cfg files.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thecloudmethod/yealink-provision-patch.git"
+  },
+  "contributors": [
+    "Ben Morgan <ben@thecloudmethod.com>"
+  ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build --watch --webpack",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start": "node dist/main",
+    "start:dev": "cross-env LEGACY_SERVER_URL={REPLACE_WITH_YOUR_LEGACY_SERVER_URL} HOST={SET_THE_IP_OR_FQDN_OF_THE_SERVER} nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
@@ -17,12 +23,17 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "copy:static": "yarn cpx 'src/static/**' 'dist/static'"
   },
   "dependencies": {
     "@nestjs/common": "^6.8.0",
     "@nestjs/core": "^6.8.0",
     "@nestjs/platform-express": "^6.8.0",
+    "aes-js": "^3.1.2",
+    "crypto": "^1.0.1",
+    "mcrypt": "^0.1.15",
+    "readline": "^1.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3"
@@ -35,6 +46,8 @@
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.8",
     "@types/supertest": "^2.0.8",
+    "cpx": "^1.5.0",
+    "cross-env": "^6.0.3",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
