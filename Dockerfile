@@ -14,4 +14,4 @@ COPY --chown=node:node . .
 
 EXPOSE 3000
 
-CMD [ "node", "dist/main/main.js" ]
+CMD [ "node", "dist/main.js" ]

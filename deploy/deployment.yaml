@@ -16,7 +16,7 @@ spec:
       containers:
       - name: yealink-provision
         image: thecloudmethod/yealink-provision-patch:0.1.0
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
