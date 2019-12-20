@@ -12,7 +12,7 @@ spec:
 #    - yealink-provision.apis.simpsonlabs.net
 #    secretName: yealink-provision-cert-secret
   rules:
-  - host: ghost.apis.simpsonlabs.net
+  - host: yealink-provision.apis.simpsonlabs.net
     http:
       paths:
       - path: /
