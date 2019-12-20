@@ -16,7 +16,7 @@ const LEGACY_SERVER_URL = process.env.LEGACY_SERVER_URL;
 
 const overides = [
   { find: 'firmware.url', replace: 'firmware.url =', type:'line' },
-  { find: 'static.autoprovision.1.url', replace: 'static.autoprovision.1.url = '+PROTOCOL+'://'+ HOST+':'+PORT+'/provision/', type:'line'},
+  { find: 'static.autoprovision.1.url', replace: 'static.autoprovision.1.url = '+PROTOCOL+'://'+HOST+'/provision/', type:'line'},
   { find: 'static.auto_provision.aes_key_in_file', replace: 'static.auto_provision.aes_key_in_file = 0', type:'line' },
   { find: 'static.auto_provision.update_file_mode', replace: 'static.auto_provision.update_file_mode = 0', type:'line'},
   { find: 'wallpaper_upload.url', replace: 'wallpaper_upload.url = https://s3-us-west-1.amazonaws.com/phones.simpsonlabs/T46S-BGv2.jpg', type:'line'},
@@ -255,7 +255,7 @@ export async function findValueInConfig(templateKeyAndValuePair: string[], confi
           if(templateConfig.length > 0) {
             return templateConfig
           } else {
-            return [ templateKey.replace('.X.', '.1.').replace('.Y.', '.1.') +' = ' ];
+            return [ staticHold+templateKey.replace('.X.', '.1.').replace('.Y.', '.1.') +' = ' ];
           }
             
         }
@@ -301,7 +301,7 @@ export async function findValueInConfig(templateKeyAndValuePair: string[], confi
         }
   
         if(index == config.length-1) {
-          return [ templateKey+' = '+ await valueFilter(valueFilters, templateKey, templateValue) ];          
+          return [ staticHold+templateKey+' = '+ await valueFilter(valueFilters, templateKey, templateValue) ];          
         }
       }
     }
