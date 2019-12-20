@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ghost
+  name: yealink-provision
+  namespace: yealink-provision
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-#    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: "nginx"    
+    #certmanager.k8s.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
 
 spec:
-#  tls:
-#  - hosts:
-#    - yealink-provision.apis.simpsonlabs.net
-#    secretName: yealink-provision-cert-secret
+  #tls:
+  #- hosts:
+    #- yealink-provision.apis.simpsonlabs.net
+    #secretName: ghost-crt-prod
   rules:
   - host: yealink-provision.apis.simpsonlabs.net
     http:
