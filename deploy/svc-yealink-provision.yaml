@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: yealink-provision
-  namespace: yealink-provision
+#  namespace: yealink-provision
 spec:
   selector:
     app: yealink-provision
