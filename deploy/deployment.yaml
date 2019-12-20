@@ -20,7 +20,7 @@ spec:
         ports:
         - containerPort: 3000
         env:
-          - name: HOST
-            value: yealink-provision.apis.simpsonlabs.net
-          - name: LEGACY_SERVER_URL
-            value: http://provision.phonepower.com:4199/Master/Encrypted/
+        - name: HOST
+          value: yealink-provision.apis.simpsonlabs.net
+        - name: LEGACY_SERVER_URL
+          value: http://provision.phonepower.com:4199/Master/Encrypted/
