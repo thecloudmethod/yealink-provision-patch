@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const HOST = process.env.HOST;
 const LEGACY_SERVER_URL = process.env.LEGACY_SERVER_URL;
 

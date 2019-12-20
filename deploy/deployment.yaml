@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yealink-provision
+  namespace: yealink-provision
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yealink-provision
+  template:
+    metadata:
+      labels:
+        app: yealink-provision
+    spec:
+      containers:
+      - name: yealink-provision
+        image: thecloudmethod/yealink-provision-patch:0.1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+      env:
+        - name: HOST
+          value: yealink-provision.apis.simpsonlabs.net
+        - name: LEGACY_SERVER_URL
+          value: http://provision.phonepower.com:4199/Master/Encrypted/
