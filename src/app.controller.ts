@@ -14,6 +14,24 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST;
 const LEGACY_SERVER_URL = process.env.LEGACY_SERVER_URL;
 
+const pre_match_overrides = [
+  'linekey.4.type = 16',
+  'linekey.4.line = 1',
+  'linekey.4.label = Park 1',
+  'linekey.4.value = 9993',
+  'linekey.4.extension = *98',
+  'linekey.5.type = 16',
+  'linekey.5.line = 1',
+  'linekey.5.label = Park 2',
+  'linekey.5.value = 9994',
+  'linekey.5.extension = *98',
+  'linekey.6.type = 16',
+  'linekey.6.line = 1',
+  'linekey.6.label = Park 3',
+  'linekey.6.value = 9995',
+  'linekey.6.extension = *98'
+]
+
 const overides = [
   { find: 'firmware.url', replace: 'firmware.url =', type:'line' },
   { find: 'static.autoprovision.1.url', replace: 'static.autoprovision.1.url = '+PROTOCOL+'://'+HOST+'/provision/', type:'line'},
@@ -31,6 +49,7 @@ const valueFilters = [
   { key: /(account.\d.label)/g , type:'transform', transform: (value, key)=>{ return  value.slice(value.length-4) }},
   { key: /(account.\d.display_name)/g , type:'transform', transform: (value, key)=>{ return  value.slice(value.length-4) }},
   { key: /(linekey.\d.label)/g , type:'transform', transform: (value, key)=>{ return value.includes('Park')? value: "Line " + key.match(/\d/g) }},
+  { key: /(linekey.\d.type)/g , type:'transform', transform: (value, key)=>{ return value.includes('10')? "16" + "\nlinekey."+key.match(/\d/g)+".pickup_value = *98": value }},
 ]
 
 @Controller('provision')
@@ -113,7 +132,8 @@ specific_model.excluded_mode= 1`
           )
         }),
         map(decrypted => {
-          const config = removeBlankLines(patch(decrypted, cleanMap)).replace('\r','\n').split('\n').filter(Boolean);
+          const config: string[] = removeBlankLines(patch(decrypted, cleanMap)).replace(/[\r]/g,'\n').split('\n').filter(Boolean).concat(pre_match_overrides);
+
           return matchTemplateParamerters(config)
         }),
         map(async ported => {
@@ -133,7 +153,7 @@ specific_model.excluded_mode= 1`
 
 export async function matchTemplateParamerters(config: string[]) {
   // Read template from filesystem and split into array base off return and newline, don't return blank lines
-  const lines = require('fs').readFileSync(__dirname + '/static/merged.cfg', 'utf8').replace('\r','\n').split('\n').filter(Boolean);
+  const lines = require('fs').readFileSync(__dirname + '/static/merged.cfg', 'utf8').replace(/[\r]/g,'\n').split('\n').filter(Boolean);
   let patched: string[] = [];
 
   for (let index = 0; index < lines.length; index++) {
@@ -336,7 +356,6 @@ export function patch(data, map)
     } else if (patch.type == 'add') {
       patched = patched +'\n'+ patch.replace+'\n';
     }else {
-      console.log({searchString: searchString, replace: patch.replace })
       patched = patched.replace(new RegExp(searchString, 'g'), patch.replace);
     }
 
