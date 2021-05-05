@@ -13,10 +13,9 @@ spec:
       labels:
         app: yealink-provision
     spec:
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+      nameservers:
+        - 192.168.1.100
+        - 8.8.8.8
       containers:
       - name: yealink-provision
         image: thecloudmethod/yealink-provision-patch:0.1.5
