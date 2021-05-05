@@ -13,11 +13,6 @@ spec:
       labels:
         app: yealink-provision
     spec:
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-        - 192.168.1.100
-        - 8.8.8.8
       containers:
       - name: yealink-provision
         image: thecloudmethod/yealink-provision-patch:0.1.5
@@ -29,3 +24,7 @@ spec:
           value: yealink-provision.apis.simpsonlabs.net
         - name: LEGACY_SERVER_URL
           value: http://provision.phonepower.com:4199/Master/Encrypted/
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 192.168.1.100
